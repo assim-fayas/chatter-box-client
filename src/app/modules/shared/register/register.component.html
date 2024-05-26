@@ -79,10 +79,9 @@
                 type="text"
                 id="FirstName"
               autocomplete="name"
-                class="mt-1 w-full rounded-md p-1 border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-              />
-              <small  *ngIf="registrationForm.get('firstName')?.touched && registrationForm.get('firstName')?.errors?.['required']" class="text-red-500">*First name is required</small><br>
-              <small *ngIf="registrationForm.get('firstName')?.touched && (registrationForm.get('firstName')?.errors?.['minlength'])" class="text-red-500">*Min 4 charecter is required</small><br>
+                class="mt-1 w-full rounded-md p-1 border-gray-200 bg-white text-sm text-gray-700 shadow-sm"/>
+              <ng-container  *ngIf="registrationForm.get('firstName')?.touched && registrationForm.get('firstName')?.errors?.['required']">  <small  class="text-red-500 ">*First name is required</small><br></ng-container>
+              <ng-container *ngIf="registrationForm.get('firstName')?.touched && (registrationForm.get('firstName')?.errors?.['minlength'])">  <small  class="text-red-500">*Min 4 charecter is required</small><br></ng-container>
             </div>
           
             <div class="col-span-6 sm:col-span-3">
@@ -97,8 +96,7 @@
               
                 class="mt-1 w-full rounded-md p-1 border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
               />
-              <small class="text-red-500" *ngIf="registrationForm.get('lastName')?.touched && registrationForm.get('lastName')?.errors?.['required']">*Last name is required</small>
-              <small *ngIf="registrationForm.get('lastName')?.touched && (registrationForm.get('lastName')?.errors?.['minlength'])" class="text-red-500">*Min 4 charecter is required</small><br>
+              <ng-container *ngIf="registrationForm.get('lastName')?.touched && registrationForm.get('lastName')?.errors?.['required']" >  <small class="text-red-500" >*Last name is required</small> <br></ng-container>
             </div>
   
             <div class="col-span-6">
@@ -111,13 +109,9 @@
                 name="email"
                 class="mt-1 w-full rounded-md p-1 border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
               />
-              <small class="text-red-500" *ngIf="registrationForm.get('email')?.touched && registrationForm.get('email')?.errors?.['required']">*Email is required</small>
-              <small
-              *ngIf="registrationForm.get('email')?.touched && registrationForm.get('email')?.errors?.['emailPattern'] || registrationForm.get('email')?.errors?.['noSpaceAllowed']"
-              class="text-red-500">
-              *Incorrect email format
-          </small>
-            </div>
+              <ng-container *ngIf="registrationForm.get('email')?.touched && registrationForm.get('email')?.errors?.['required']" ><small class="text-red-500" >*Email is required</small> <br></ng-container>
+              <ng-container  *ngIf="registrationForm.get('email')?.touched && registrationForm.get('email')?.errors?.['emailPattern'] || registrationForm.get('email')?.errors?.['noSpaceAllowed']" >  <small class="text-red-500"> *Incorrect email format </small> <br></ng-container>
+           </div>
   
             <div class="col-span-6 ">
               <label for="Password" class="block text-sm font-medium text-gray-700"> Password </label>
@@ -129,11 +123,16 @@
                 name="password" autocomplete="new-password"
                 class="mt-1 w-full rounded-md p-1 border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
               />
-              <small class="text-red-500" *ngIf="registrationForm.get('password')?.touched && registrationForm.get('password')?.errors?.['required']">*Email is required</small>
-              <small *ngIf="registrationForm.get('password')?.touched && registrationForm.get('password')?.errors?.['noSpaceAllowed'] " class="text-red-500">*No space is allowed in password</small><br>
-              <small *ngIf="registrationForm.get('password')?.touched && (registrationForm.get('password')?.errors?.['minlength'])" class="text-red-500">*Min 6 charecter is required</small><br>
-              <small *ngIf="registrationForm.get('password')?.touched && (registrationForm.get('password')?.errors?.['maxlength'])" class="text-red-500">*Max 12 charecter is allowed</small><br>
-              <small *ngIf="registrationForm.get('password')?.touched && (registrationForm.get('password')?.errors?.['atLeastOneSpecialChar'])" class="text-red-500">*Atleast one special character is required</small><br>
+               <ng-container *ngIf="registrationForm.get('password')?.touched && registrationForm.get('password')?.errors?.['required']"> <small class="text-red-500" >*Email is required</small></ng-container>
+               <ng-container *ngIf="registrationForm.get('password')?.touched && registrationForm.get('password')?.errors?.['noSpaceAllowed'] "> <small  class="text-red-500">*No space is allowed</small><br></ng-container>
+               <ng-container *ngIf="registrationForm.get('password')?.touched && (registrationForm.get('password')?.errors?.['minlength'])">  <small  class="text-red-500">*Min 6 charecter is required</small> <br></ng-container>
+               <ng-container *ngIf="registrationForm.get('password')?.touched && (registrationForm.get('password')?.errors?.['maxlength'])"> <small  class="text-red-500">*Max 12 charecter is allowed</small> <br></ng-container>
+               <ng-container *ngIf="registrationForm.get('password')?.touched && (registrationForm.get('password')?.errors?.['atLeastOneSpecialChar'])"> <small  class="text-red-500">*Atleast one special character is required</small> <br></ng-container>
+             
+             
+             
+             
+             
             </div>
             <div class="col-span-6 sm:gap-4">
               <button type="submit"
@@ -141,20 +140,17 @@
               >
                 Create an account
               </button>
-  
-              <p class="mt-4 text-sm text-gray-500 sm:mt-0 hidden">
-                Already have an account?
-                <a href="#" class="text-gray-700 underline hidden">Log in</a>.
-              </p>
             </div>
             <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
-                <p class="mt-4 text-sm text-gray-500 sm:mt-0">
-                   Register as admin
-                    <a href="#" class="text-gray-700 underline">register here</a>.
-                  </p>
+                
                   <p class="mt-4 text-sm text-gray-500 sm:mt-0">
                     Already have an account?
+                    <ng-container *ngIf="!isArtist">
                     <a [routerLink]="'/login'" routerLinkActive="router-link-active"  class="text-gray-700 underline">Log in</a>.
+                  </ng-container>
+                    <ng-container *ngIf="isArtist" >
+                    <a [routerLink]="'/artist/login'" routerLinkActive="router-link-active"  class="text-gray-700 underline">Log in</a>.
+                  </ng-container>
                   </p>
 
             </div>

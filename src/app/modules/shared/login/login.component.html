@@ -39,10 +39,7 @@
             class="mt-1 w-full rounded-md p-2 border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
           />
           <small *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required'] " class="text-red-500">*Password is required</small><br>
-          <small *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['noSpaceAllowed'] " class="text-red-500">*No space is allowed in password</small><br>
-          <small *ngIf="loginForm.get('password')?.touched && (loginForm.get('password')?.errors?.['minlength'])" class="text-red-500">*Min 6 charecter is required</small><br>
-          <small *ngIf="loginForm.get('password')?.touched && (loginForm.get('password')?.errors?.['atLeastOneSpecialChar'])" class="text-red-500">*Atleast one special character is required</small><br>
- 
+        
         </div>
   
         <div class="col-span-1 sm:col-span-2 lg:col-span-6">
@@ -56,10 +53,16 @@
         <div class="col-span-1 sm:col-span-2 lg:col-span-6 sm:flex sm:items-center sm:justify-between">
           <p class="mt-4 text-sm text-gray-500 sm:mt-0">
             Didn't have an account yet!
-            <a href="/register" class="text-gray-700 underline">Register</a>.
+            <ng-container *ngIf="!isArtist">
+            <a  href="/register" class="text-gray-700 underline">Register</a>.
+          </ng-container>
+            <ng-container *ngIf="isArtist">
+            <a  href="/artist/register" class="text-gray-700 underline">Register</a>.
+          </ng-container>
           </p>
         </div>
       </form>
     </div>
+
   </section>
   

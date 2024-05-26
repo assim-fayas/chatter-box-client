@@ -1,22 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UserRoutingModule } from './user-routing.module';
+import { ArtistRoutingModule } from './artist-routing.module';
 import { SharedModule } from '../shared/shared.module';
-import { UserHomeComponent } from './components/user-home/user-home.component';
+import { ArtistHomeComponent } from './components/artist-home/artist-home.component';
+
 
 
 
 
 @NgModule({
   declarations: [
-  UserHomeComponent
-  
-    
+ArtistHomeComponent
   ],
   imports: [
     CommonModule,
-    UserRoutingModule,
+    ArtistRoutingModule,
     SharedModule
   ]
 })
-export class UserModule { }
+export class ArtistModule { }
