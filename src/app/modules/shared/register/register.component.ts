@@ -42,7 +42,7 @@ onRegistrationFormSubmit(){
   
  }else{
   const formValues=this.registrationForm.value
-this.authService.registration(formValues.firstName,formValues.lastName,formValues.email,formValues.password).subscribe({
+this.authService.registration(formValues.firstName,formValues.lastName,formValues.email,formValues.password,this.isArtist).subscribe({
   next:(res)=>{
     this.registrationForm.reset()
 console.log(res);
