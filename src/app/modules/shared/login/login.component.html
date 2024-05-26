@@ -1,10 +1,10 @@
-<section class="bg-[#edede9] min-h-screen flex justify-center lg:items-center p-4 lg:pt-0 pt-10">
+<section class="min-h-screen flex justify-center lg:items-center p-4 lg:pt-0 pt-10">
     <div class="w-full max-w-lg flex flex-col items-center">
       <h1 class="text-4xl font-bold text-[#00A884] mb-6 drop-shadow-lg">
         <span class="block">Welcome to</span>
         <span class="block mt-2 text-5xl text-[#007B5E]">Chatter Box</span>
       </h1>
-      <form action="#" class="w-full grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-6">
+      <form [formGroup]='loginForm' (ngSubmit)="onLoginFormSubmitted()" class="w-full grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-6">
        
   
        
@@ -12,25 +12,38 @@
         <div class="col-span-1 sm:col-span-2 lg:col-span-6">
           <label for="Email" class="block text-sm font-medium text-gray-700"> Email </label>
           <input
-            type="email"
-            id="Email"
-            name="email"
+            type="email" formControlName='email'
+            id="Email" autocomplete="email"
+      
             class="mt-1 w-full rounded-md p-2 border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
           />
+          <small *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['required']" class="text-red-500">*Email is required
+          </small>
+          <small
+          *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['emailPattern'] || loginForm.get('email')?.errors?.['noSpaceAllowed']"
+          class="text-red-500">
+          *Incorrect email format
+      </small>
+         
+         
         </div>
   
         <div class="col-span-1 sm:col-span-2 lg:col-span-6">
-          <label for="Password" class="block text-sm font-medium text-gray-700"> Password </label>
+          <label for="Password"  class="block text-sm font-medium text-gray-700"> Password </label>
           <input
             type="password"
             id="Password"
+            formControlName='password'
             name="password"
+            autocomplete="current-password"
             class="mt-1 w-full rounded-md p-2 border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
           />
+          <small *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required'] " class="text-red-500">*Password is required</small><br>
+        
         </div>
   
         <div class="col-span-1 sm:col-span-2 lg:col-span-6">
-          <button
+          <button type="submit"
             class="inline-block rounded-md border border-[#00A884] bg-[#00A884] px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent w-full hover:text-gray-700 focus:outline-none focus:ring active:text-blue-500"
           >
             Sign In
@@ -40,10 +53,16 @@
         <div class="col-span-1 sm:col-span-2 lg:col-span-6 sm:flex sm:items-center sm:justify-between">
           <p class="mt-4 text-sm text-gray-500 sm:mt-0">
             Didn't have an account yet!
-            <a href="/register" class="text-gray-700 underline">Register</a>.
+            <ng-container *ngIf="!isArtist">
+            <a  href="/register" class="text-gray-700 underline">Register</a>.
+          </ng-container>
+            <ng-container *ngIf="isArtist">
+            <a  href="/artist/register" class="text-gray-700 underline">Register</a>.
+          </ng-container>
           </p>
         </div>
       </form>
     </div>
+
   </section>
   
