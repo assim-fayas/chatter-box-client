@@ -8,17 +8,16 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
- constructor(private http:HttpClient,private router:Router) { }
-private api:string=environment.api
-private tokenExpiretimer:any
+export class ArtistAuthService {
+  constructor(private http:HttpClient,private router:Router) { }
+  private api:string=environment.artistApi
+  private tokenExpiretimer:any
 
-user=new BehaviorSubject<User|null>(null)
+  artist=new BehaviorSubject<User|null>(null)
 
 
-
-// register user
-registration(firstName:string,lastName:string,email:string,password:string,isArtist:boolean){
+// register artist
+artistRegistration(firstName:string,lastName:string,email:string,password:string,isArtist:boolean){
   return this.http.post<AuthResponse>(`${this.api}/register`,{firstName,lastName,email,password,isArtist:isArtist}).pipe(tap(response=>{
   this.handleCreateUser(response)
     return response
@@ -33,7 +32,7 @@ registration(firstName:string,lastName:string,email:string,password:string,isArt
 }
 
 
-//login user
+//login artist
 login(email:string,password:string){
   return this.http.post<AuthResponse>(`${this.api}/login`,{email,password}).pipe(tap(response=>{
     this.handleCreateUser(response)
@@ -46,20 +45,17 @@ catchError((error)=>{
 }
 
 
-
 autoLogin(){
-  console.log("inside auto login");
-  
-const userJson = localStorage.getItem('user');
-const userData = userJson ? JSON.parse(userJson) : null
-if(!userData){
+const userJson = localStorage.getItem('artist');
+const artistData = userJson ? JSON.parse(userJson) : null
+if(!artistData){
   return 
 }
-const loggedUser=new User(userData.email,userData._id,userData.firstName,userData.isArtist,userData._token,userData.expiresIn)
+const loggedUser=new User(artistData.email,artistData._id,artistData.firstName,artistData.isArtist,artistData._token,artistData.expiresIn)
 
 if(loggedUser.token){
-this.user.next(loggedUser)
-const expiresDate = new Date(userData.expiresIn);
+this.artist.next(loggedUser)
+const expiresDate = new Date(artistData.expiresIn);
 const timerValue=expiresDate.getTime() - new Date().getTime()
 console.log("timer cvalueee" ,timerValue);
 
@@ -67,19 +63,18 @@ this.autoLogout(timerValue)
 }
 }
 
-
 autoLogout(expireTime:number){
   
- this.tokenExpiretimer=setTimeout(()=>{
-this.logout()
-   },expireTime)
-}
+  this.tokenExpiretimer=setTimeout(()=>{
+ this.logout()
+    },expireTime)
+ }
 
 
-logout(){
-  this.user.next(null)
-  this.router.navigate(['/login'])
-  localStorage.removeItem('user')
+ logout(){
+  this.artist.next(null)
+  this.router.navigate(['artist/login'])
+  localStorage.removeItem('artist')
   if(this.tokenExpiretimer){
     clearTimeout(this.tokenExpiretimer)
   }
@@ -95,9 +90,9 @@ private handleCreateUser(response:AuthResponse){
   const expiresInTs=new Date().getTime()+ +response.expiresIn*1000
   //convert to date time value
   const expiresIn=new Date(expiresInTs)
- const user= new User(response.email,response._id,response.firstName,response.isArtist,response.token,expiresIn)
- this.user.next(user);
- localStorage.setItem('user',JSON.stringify(user))
+ const artist= new User(response.email,response._id,response.firstName,response.isArtist,response.token,expiresIn)
+ this.artist.next(artist);
+ localStorage.setItem('artist',JSON.stringify(artist))
 
  this.autoLogout(+response.expiresIn *1000)
 
