@@ -6,6 +6,8 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoadingSpinnerComponent } from './loadingSpinner/loading-spinner';
 import { NavbarComponent } from './navbar/navbar.component';
+import { ChatComponent } from './chat/chat.component';
+import { UserListingComponent } from './user-listing/user-listing.component';
 
 
 
@@ -14,7 +16,9 @@ import { NavbarComponent } from './navbar/navbar.component';
     LoginComponent,
     RegisterComponent,
     LoadingSpinnerComponent,
-    NavbarComponent
+    NavbarComponent,
+    ChatComponent,
+    UserListingComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +27,7 @@ import { NavbarComponent } from './navbar/navbar.component';
    
   ],
   exports:[
-    LoginComponent, RegisterComponent,LoadingSpinnerComponent,NavbarComponent
+    LoginComponent, RegisterComponent,LoadingSpinnerComponent,NavbarComponent,ChatComponent,UserListingComponent
   ]
 })
 export class SharedModule { }

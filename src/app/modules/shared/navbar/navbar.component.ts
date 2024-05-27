@@ -1,41 +1,39 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { AuthService } from 'src/app/service/auth.service';
-import { User } from '../../model/user';
 import {  Subscription } from 'rxjs';
+import { ArtistAuthService } from 'src/app/service/artist-auth.service';
+import { urlParser } from '../../utility/helperFunctions/urlparser';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit,OnDestroy {
+export class NavbarComponent implements OnInit {
   authService:AuthService=inject(AuthService)
+  artistAuthService:ArtistAuthService=inject(ArtistAuthService)
+  isArtist:boolean=false
 
-  isLoggedIn:boolean=false
-  private userSubject!:Subscription
 
   ngOnInit(): void {
-  this.userSubject=  this.authService.user.subscribe((user:User|null)=>{
-
-      console.log(user,"uuuuuuuuuuuuuuuuuu");
-      
-this.isLoggedIn= user ? true : false
-
-
-console.log("Status",this.isLoggedIn);
-
-    })
+   //identifying the role of the user.
+   const currentUrl = window.location.href;
+   this.isArtist=urlParser(currentUrl)
   }
 
 
 
 
 onLogout(){
+if(this.isArtist){
+this.artistAuthService.logout()
+}else{
   this.authService.logout()
 }
 
 
-  ngOnDestroy(){
-    this.userSubject.unsubscribe()
-  }
+}
+
+
+  
 }

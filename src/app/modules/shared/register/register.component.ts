@@ -4,6 +4,7 @@ import { CustomValidators } from '../../utility/formValidations/validators';
 import { AuthService } from '../../../service/auth.service';
 import { Router } from '@angular/router';
 import { urlParser } from '../../utility/helperFunctions/urlparser';
+import { ArtistAuthService } from 'src/app/service/artist-auth.service';
 
 @Component({
   selector: 'app-register',
@@ -20,6 +21,7 @@ isLoading:boolean=false
 
 
 authService:AuthService=inject(AuthService)
+artistAuthService:ArtistAuthService=inject(ArtistAuthService)
 router:Router=inject(Router)
 
 
@@ -45,22 +47,37 @@ onRegistrationFormSubmit(){
  }else{
   this.isLoading=true
   const formValues=this.registrationForm.value
-this.authService.registration(formValues.firstName,formValues.lastName,formValues.email,formValues.password,this.isArtist).subscribe({
-  next:(res)=>{
-    this.registrationForm.reset()
-    this.isLoading=false
-console.log(res);
-if(this.isArtist){
-  this.router.navigate(['artist/artist-home'])
-  }else{
-   this.router.navigate(['user-home'])
-  }
-},
-error:(error)=>{
-  this.isLoading=false
-  console.log(error);
+  if(this.isArtist){
+    this.artistAuthService.artistRegistration(formValues.firstName,formValues.lastName,formValues.email,formValues.password,this.isArtist).subscribe({
+      next:(res)=>{
+        this.registrationForm.reset()
+        this.isLoading=false
+        this.router.navigate(['artist/artist-home'])
+    
+    },
+    error:(error)=>{
+      this.isLoading=false
+      console.log(error);
+      
+    }})
   
-}})
+  }else{
+
+    this.authService.registration(formValues.firstName,formValues.lastName,formValues.email,formValues.password,this.isArtist).subscribe({
+      next:(res)=>{
+        this.registrationForm.reset()
+        this.isLoading=false
+       this.router.navigate(['user-home'])
+    
+    },
+    error:(error)=>{
+      this.isLoading=false
+      console.log(error);
+      
+    }})
+  }
+
+
  }
 }
 

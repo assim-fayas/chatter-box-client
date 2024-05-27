@@ -1,0 +1,18 @@
+<div class="flex flex-col h-screen max-w-full md:max-w-2xl lg:max-w-4xl mx-auto mt-4 bg-gray-900 border border-gray-300 rounded-lg shadow-lg">
+    <!-- Users List -->
+    <div class="flex flex-col w-full bg-gray-900 overflow-y-auto">
+        <div class="p-4 bg-[#008069] border-b border-gray-400">
+            <h2 class="text-md font-bold text-[#edede9]">Chats</h2>
+        </div>
+        <div *ngFor="let user of users" class="flex flex-col space-y-2 p-2">
+            <!-- User Item -->
+            <div (click)="onChatClicked(user._id)"  class="flex items-center p-2 bg-white hover:bg-gray-100 cursor-pointer rounded-lg">
+                <img src="https://via.placeholder.com/40" class="w-10 h-10 rounded-full" alt="User Avatar">
+                <div class="ml-3">
+                    <p class="text-sm font-semibold text-gray-700">{{user.firstName}}</p>
+                    <p class="text-xs text-gray-500">Last message...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -4,6 +4,7 @@ import { CustomValidators } from '../../utility/formValidations/validators';
 import { AuthService } from '../../../service/auth.service';
 import { NavigationEnd, Router,Event } from '@angular/router';
 import { urlParser } from '../../utility/helperFunctions/urlparser';
+import { ArtistAuthService } from 'src/app/service/artist-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ loginForm!:FormGroup
 isArtist:boolean=false
 isLoading:boolean=false
 authService:AuthService=inject(AuthService)
+artistAuthService:ArtistAuthService=inject(ArtistAuthService)
 router:Router=inject(Router)
 
 
@@ -43,22 +45,38 @@ router:Router=inject(Router)
       return
     }else{
       this.isLoading=true
-    const  formdata=this.loginForm.value
-    this.authService.login(formdata.email,formdata.password).subscribe({
-      next:(response)=>{
-        this.isLoading=false
-       console.log(response);
-       if(this.isArtist){
-       this.router.navigate(['artist/artist-home'])
-       }else{
-        this.router.navigate(['user-home'])
-       }
+      const  formdata=this.loginForm.value
+      if(this.isArtist){
+        this.artistAuthService.login(formdata.email,formdata.password).subscribe({
+          next:(response)=>{
+            this.isLoading=false
+           console.log(response);
+          
+           this.router.navigate(['artist/artist-home'])
+          
+    
+          },
+          error:(error)=>{
+            console.log(error);
+            
+            this.isLoading=false
+          }
+        })
+      }else{
+        this.authService.login(formdata.email,formdata.password).subscribe({
+          next:(response)=>{
+            this.isLoading=false
+           console.log(response);
+            this.router.navigate(['user-home'])
+          },
+          error:(error)=>{
+            this.isLoading=false
+          }
+        })
 
-      },
-      error:(error)=>{
-        this.isLoading=false
       }
-    })
+  
+   
   }}
 
 }
