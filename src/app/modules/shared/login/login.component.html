@@ -4,7 +4,9 @@
         <span class="block">Welcome to</span>
         <span class="block mt-2 text-5xl text-[#007B5E]">Chatter Box</span>
       </h1>
-      <form [formGroup]='loginForm' (ngSubmit)="onLoginFormSubmitted()" class="w-full grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-6">
+
+      <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+      <form [formGroup]='loginForm' (ngSubmit)="onLoginFormSubmitted()" class="w-full grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-6" *ngIf="!isLoading">
        
   
        

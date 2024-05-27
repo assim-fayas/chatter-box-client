@@ -16,9 +16,11 @@ export class RegisterComponent implements OnInit {
   
 registrationForm!:FormGroup
 isArtist:boolean=false
+isLoading:boolean=false
 
 
 authService:AuthService=inject(AuthService)
+router:Router=inject(Router)
 
 
 
@@ -41,17 +43,25 @@ onRegistrationFormSubmit(){
   console.log("please fill all the rewuired fields");
   
  }else{
+  this.isLoading=true
   const formValues=this.registrationForm.value
-this.authService.registration(formValues.firstName,formValues.lastName,formValues.email,formValues.password).subscribe({
+this.authService.registration(formValues.firstName,formValues.lastName,formValues.email,formValues.password,this.isArtist).subscribe({
   next:(res)=>{
     this.registrationForm.reset()
+    this.isLoading=false
 console.log(res);
+if(this.isArtist){
+  this.router.navigate(['artist/artist-home'])
+  }else{
+   this.router.navigate(['user-home'])
+  }
+},
+error:(error)=>{
+  this.isLoading=false
+  console.log(error);
+  
 }})
  }
-
-
-
-
 }
 
 
