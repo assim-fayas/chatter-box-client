@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/service/user.service';
 import { DbResponse } from '../../model/dbResponse';
 import { urlParser } from '../../utility/helperFunctions/urlparser';
+import { ChatServiceService } from 'src/app/service/chat-service.service';
+import { PrivateMessage } from '../../model/privateMessage';
 
 @Component({
   selector: 'app-chat',
@@ -13,11 +15,14 @@ export class ChatComponent implements OnInit {
 router:Router=inject(Router)
 activeRoute:ActivatedRoute=inject(ActivatedRoute)
 userService:UserService=inject(UserService)
+chatService:ChatServiceService=inject(ChatServiceService)
 
 isArtist:boolean=false
 senderId!:string
 receverId!:string
 receverUser!:DbResponse
+privateChatMessages!:any
+
 ngOnInit(): void {
     //identifying the role of the user.
     const currentUrl = window.location.href;
@@ -38,12 +43,72 @@ this.userService.singleUser(this.receverId).subscribe({
   }
 })
   }
+  
+  //fetch all the private message from user
+this.chatService.fetchAllPrivateChats(this.senderId,this.receverId).subscribe(
+  {
+  next:(response)=>{
+this.privateChatMessages=response[0].messages
+console.log("privete messages",response[0].messages);
+
+  
+
+  },
+  error:(err)=>{
+    console.log(err);
+    
+  }
 }
+)
+
+
+
+  //fetch the private message from user
+  this.chatService.getMessage(this.receverId).subscribe(
+    {
+    next:(res)=>{
+      console.log("status of the main state", this.privateChatMessages);
+      
+      console.log(res,"from sockett");
+
+const value=this.privateChatMessages
+value.push(res)
+      this.privateChatMessages=value
+    },
+    error:(err)=>{
+      console.log(err);
+      
+    }
+  }
+)
+
+
+}
+
+onSendMEssage(message:string){
+const messageTOSend:PrivateMessage={
+  text:message,
+  senderId:this.senderId,
+  reciverId:this.receverId
+}
+
+this.chatService.sendMessage(messageTOSend)
+const value=this.privateChatMessages
+value.push(messageTOSend)
+this.privateChatMessages=value
+
+
+
+// this.privateChatMessages=this.privateChatMessages[ ,message]
+
+}
+
+
 
 
 navigateToChatListing(){
   if( this.isArtist){
-    this.router.navigate(['/artist/user-home'])
+    this.router.navigate(['/artist/artist-home'])
   }else{
     this.router.navigate(['user-home'])
   }

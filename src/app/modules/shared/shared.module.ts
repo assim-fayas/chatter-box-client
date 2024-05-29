@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoadingSpinnerComponent } from './loadingSpinner/loading-spinner';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ChatComponent } from './chat/chat.component';
 import { UserListingComponent } from './user-listing/user-listing.component';
+import { GroupListingComponent } from './group-listing/group-listing.component';
 
 
 
@@ -18,16 +19,18 @@ import { UserListingComponent } from './user-listing/user-listing.component';
     LoadingSpinnerComponent,
     NavbarComponent,
     ChatComponent,
-    UserListingComponent
+    UserListingComponent,
+    GroupListingComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
+    FormsModule
    
   ],
   exports:[
-    LoginComponent, RegisterComponent,LoadingSpinnerComponent,NavbarComponent,ChatComponent,UserListingComponent
+    LoginComponent, RegisterComponent,LoadingSpinnerComponent,NavbarComponent,ChatComponent,UserListingComponent,GroupListingComponent
   ]
 })
 export class SharedModule { }
