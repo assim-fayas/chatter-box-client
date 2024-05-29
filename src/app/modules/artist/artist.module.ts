@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ArtistRoutingModule } from './artist-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { ArtistHomeComponent } from './components/artist-home/artist-home.component';
+import { ArtistChatComponent } from './components/artist-chat/artist-chat.component';
 
 
 
@@ -10,7 +11,8 @@ import { ArtistHomeComponent } from './components/artist-home/artist-home.compon
 
 @NgModule({
   declarations: [
-ArtistHomeComponent
+ArtistHomeComponent,
+ArtistChatComponent
   ],
   imports: [
     CommonModule,

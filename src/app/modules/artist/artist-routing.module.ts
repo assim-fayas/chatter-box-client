@@ -5,12 +5,14 @@ import { RegisterComponent } from '../shared/register/register.component';
 import { ArtistHomeComponent } from './components/artist-home/artist-home.component';
 import { artistAuthGuard } from 'src/app/guards/artist-auth.guard';
 import { ChatComponent } from '../shared/chat/chat.component';
+import { GroupListingComponent } from '../shared/group-listing/group-listing.component';
 
 
 const routes: Routes = [
   {path:"",component:ArtistHomeComponent,canActivate:[artistAuthGuard]},
   {path:"artist-home",component:ArtistHomeComponent,canActivate:[artistAuthGuard]},
  {path:"chatViewArtist/:senderId/:receverId",component:ChatComponent,canActivate:[artistAuthGuard]},
+ {path:'groupChatListingArtist',component:GroupListingComponent},
  {path:"login",component:LoginComponent},
   {path:"register",component:RegisterComponent}
 ];

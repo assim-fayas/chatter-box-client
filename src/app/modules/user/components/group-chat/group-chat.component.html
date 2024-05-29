@@ -1,0 +1,66 @@
+<div class="h-screen flex flex-col">
+    <!-- Header -->
+    <div class="flex items-center justify-between px-4 py-3 bg-[#008069] text-white">
+      <div class="flex items-center space-x-4">
+        <!-- Back Arrow Button -->
+        <button class="text-white" >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <h1 class="text-2xl font-bold">{{groupName}}</h1>
+      </div>
+      <button class="text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h18M9 3v18M21 9h-6m0 0v6m0-6h-6m0 0V3" />
+        </svg>
+      </button>
+    </div>
+  
+    <!-- Chat Messages -->
+    <div class="flex-1 p-4 overflow-y-auto bg-gray-900" >
+      <div class="flex flex-col space-y-4" *ngFor="let item of groupMessage">
+        <!-- Message from others -->
+        <ng-container *ngIf="item._id!=senderId">
+        <div class="flex items-start space-x-4" >
+          <img src="https://via.placeholder.com/40" class="w-10 h-10 rounded-full" alt="User Avatar">
+          <div class="max-w-full sm:max-w-xs md:max-w-md lg:max-w-lg">
+            <p class="text-lg font-semibold text-white">{{item.sender}}</p>
+            <div class="p-3 bg-gray-100 rounded-lg shadow-md">
+              <p class="text-gray-800 text-lg">{{item.text}}</p>
+              <span class="text-sm text-gray-500">10:00 AM</span>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+  
+        <!-- Message from self -->
+        <ng-container *ngIf="item._id==senderId">
+        <div class="flex items-start justify-end space-x-4" >
+          <div class="max-w-full sm:max-w-xs md:max-w-md lg:max-w-lg text-right">
+            <p class="text-lg font-semibold text-white">{{currentUserName}}</p>
+            <div class="p-3 bg-blue-600 text-white rounded-lg shadow-md">
+              <p class="text-white text-lg">{{item.text}}</p>
+              <span class="text-sm text-gray-200">10:00 AM</span>
+            </div>
+          </div>
+          <img src="https://via.placeholder.com/40" class="w-10 h-10 rounded-full" alt="User Avatar">
+        </div>
+      </ng-container>
+      </div>
+    </div>
+  
+    <!-- Message Input -->
+    <div class="px-4 py-3 bg-gray-900 border-t border-gray-200">
+      <div class="flex items-center space-x-2">
+        <button  class="p-2 text-[#008069] hover:text-gray-200">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.414 6.414a2 2 0 01-2.828 0l-1.414-1.414a2 2 0 010-2.828L9.172 3M16 3v4m-2-2h4M9 16v2a2 2 0 002 2h2a2 2 0 002-2v-2m-6 0h6" />
+          </svg>
+        </button>
+        <input #messageInput type="text" placeholder="Type a message" class="flex-1 p-2 text-lg border rounded-lg focus:outline-none md:w-3/4">
+        <button class="p-2 bg-[#008069] hover:bg-[#008069c9] text-white rounded-lg text-lg" (click)="onSendMEssage(messageInput.value)">Send</button>
+      </div>
+    </div>
+  </div>
+  

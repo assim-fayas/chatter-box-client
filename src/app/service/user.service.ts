@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AuthResponse } from '../modules/model/authResponse';
-import { catchError, map, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
+import { Group } from '../modules/model/groupModel';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,23 @@ listAllUser(){
         })
       )
       }
+
+      createGroup(group: Group){
+        return this.http.post<Group>(`${this.api}/createGroup`, group).pipe(map(res => {
+         return res
+      }), 
+          catchError(error => throwError(() => error)) 
+        );
+      }
+
+      fetchAllGroups(){
+        return this.http.get<any>(`${this.api}/fetchAllgroups`).pipe(map(res => {
+          return res
+       }), 
+           catchError(error => throwError(() => error)) 
+         );
+      }
+      
 
 }
 
