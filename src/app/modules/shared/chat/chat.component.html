@@ -21,7 +21,7 @@
   <div class="flex-1 p-4 overflow-y-auto bg-gray-900" >
     <div class="flex flex-col space-y-4" *ngFor="let message of privateChatMessages">
       <!-- Message from others -->
-      <ng-container *ngIf="message.senderId==senderId">
+      <ng-container *ngIf="message.senderId!==senderId">
       <div class="flex items-start space-x-4" >
         <img src="https://via.placeholder.com/40" class="w-10 h-10 rounded-full" alt="User Avatar">
         <div class="max-w-full sm:max-w-xs md:max-w-md lg:max-w-lg">
@@ -35,7 +35,7 @@
     </ng-container>
 
       <!-- Message from self -->
-      <ng-container *ngIf="message.senderId==senderId">
+    <ng-container *ngIf="message.senderId==senderId">
       <div class="flex items-start justify-end space-x-4" >
         <div class="max-w-full sm:max-w-xs md:max-w-md lg:max-w-lg text-right">
           <p class="text-lg font-semibold text-white">Me</p>
