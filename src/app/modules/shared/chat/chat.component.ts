@@ -5,7 +5,8 @@ import { DbResponse } from '../../model/dbResponse';
 import { urlParser } from '../../utility/helperFunctions/urlparser';
 import { ChatServiceService } from 'src/app/service/chat-service.service';
 import { PrivateMessage } from '../../model/privateMessage';
-
+import {CloudinaryModule} from '@cloudinary/ng';
+import {Cloudinary, CloudinaryImage} from '@cloudinary/url-gen';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -22,6 +23,7 @@ senderId!:string
 receverId!:string
 receverUser!:DbResponse
 privateChatMessages!:any
+img!: CloudinaryImage;
 
 ngOnInit(): void {
     //identifying the role of the user.
@@ -82,6 +84,12 @@ value.push(res)
   }
 )
 
+
+const cld = new Cloudinary({
+  cloud: {
+    cloudName: 'demo'
+  }
+});
 
 }
 

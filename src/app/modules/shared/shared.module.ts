@@ -9,6 +9,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ChatComponent } from './chat/chat.component';
 import { UserListingComponent } from './user-listing/user-listing.component';
 import { GroupListingComponent } from './group-listing/group-listing.component';
+import { CloudinaryModule } from '@cloudinary/ng';
 
 
 
@@ -20,13 +21,15 @@ import { GroupListingComponent } from './group-listing/group-listing.component';
     NavbarComponent,
     ChatComponent,
     UserListingComponent,
-    GroupListingComponent
+    GroupListingComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    CloudinaryModule
+
    
   ],
   exports:[
